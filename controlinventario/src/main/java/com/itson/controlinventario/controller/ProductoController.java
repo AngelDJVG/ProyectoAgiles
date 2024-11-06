@@ -2,6 +2,7 @@ package com.itson.controlinventario.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.itson.controlinventario.modelos.Producto;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping({"/api/productos"})
 public class ProductoController {
 
 
@@ -20,8 +22,8 @@ public class ProductoController {
                     new Producto("Sabritas", "Papas fritas clásicas", "Sabritas", "Botanas", 0.15f)
             )
     );
-
-    @GetMapping("/producto")
+    //La ruta es: http://localhost:4000/api/producto/
+    @GetMapping("/")
     public List<Producto> getProductos() {
         return productos;
 
