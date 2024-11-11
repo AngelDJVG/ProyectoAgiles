@@ -1,11 +1,13 @@
 package com.itson.controlinventario.modelos;
 
 
+import com.itson.controlinventario.enums.UnidadMedida;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -41,12 +43,18 @@ public class Producto {
     @PositiveOrZero(message = "La cantidad debe ser un número positivo o cero")
     private float cantidad;
 
-    public Producto(String nombre, String descripcion, String marca, String categoria, float cantidad) {
+    @NotNull(message = "La unidad de medida del producto es obligatoria")
+    private UnidadMedida unidadMedida;
+
+
+    public Producto(String nombre, String descripcion, String marca, String categoria, float cantidad, UnidadMedida unidadMedida) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.marca = marca;
         this.categoria = categoria;
         this.cantidad = cantidad;
+        this.unidadMedida = unidadMedida;
     }
+
 
 }

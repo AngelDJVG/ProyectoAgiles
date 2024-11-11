@@ -44,6 +44,17 @@ public class ProductoController {
         return ResponseEntity.ok(nuevoProducto);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @Valid @RequestBody Producto producto) {
+        Producto productoActual = productoServicio.obtenerPorId(id);
+        if (productoActual == null) {
+            return ResponseEntity.notFound().build();
+        }
+        producto.setId(id);
+        Producto productoActualizado = productoServicio.guardar(producto);
+        return ResponseEntity.ok(productoActualizado);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
         Producto producto = productoServicio.obtenerPorId(id);
