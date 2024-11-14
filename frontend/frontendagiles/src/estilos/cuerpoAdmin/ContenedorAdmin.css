@@ -1,0 +1,8 @@
+.contenedor{
+    width: 100%;
+    background-color: var(--columnas-color);
+    color: var(--blanco-color);
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,11 @@
+.cuerpo-admin {
+    background-color: var(--fondo-color);
+    height: 100vh;
+}
+
+.contenedor-admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

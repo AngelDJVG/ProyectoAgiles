@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+:root {
+  --header-color: #1C2625;
+  --columnas-color: #395A53;
+  --fondo-color: #48736A;
+  --blanco-color: white;
+}
