@@ -5,8 +5,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 //Componentes
 import LoginButton from './components/LoginButton';
-import CuerpoAdmin from './components/CuerpoAdmin';
-import CuerpoInicio from './components/CuerpoInicio';
+import CuerpoAdmin from './components/cuerpoAdmin/CuerpoAdmin';
+import CuerpoInicio from './components/cuerpoUsuario/CuerpoInicio';
 
 import { useState, useEffect } from 'react';
 

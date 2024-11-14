@@ -1,5 +1,5 @@
 import React from 'react';
-import LogoutButton from './LogoutButton';
+import LogoutButton from '../LogoutButton';
 
 function CuerpoInicio() {
   return (
