@@ -47,7 +47,8 @@ public class ProductoTest {
                 "Marca X", // Marca
                 "Categoría A", // Categoría
                 10.5f, // Cantidad
-                UnidadMedida.KILOGRAMO // Unidad de medida
+                UnidadMedida.KILOGRAMO, // Unidad de medida
+                100f // Precio
         );
 
         Set<ConstraintViolation<Producto>> violations = validator.validate(producto);
@@ -63,7 +64,8 @@ public class ProductoTest {
                 "Marca X", // Marca
                 "Categoría A", // Categoría
                 10.5f, // Cantidad
-                UnidadMedida.KILOGRAMO // Unidad de medida
+                UnidadMedida.KILOGRAMO, // Unidad de medida
+                100f // Precio
         );
 
         Set<ConstraintViolation<Producto>> violations = validator.validate(producto);
@@ -80,7 +82,8 @@ public class ProductoTest {
                 "Marca X", // Marca
                 "Categoría A", // Categoría
                 -10.5f, // Cantidad negativa
-                UnidadMedida.KILOGRAMO // Unidad de medida
+                UnidadMedida.KILOGRAMO, // Unidad de medida
+                100f
         );
 
         Set<ConstraintViolation<Producto>> violations = validator.validate(producto);
@@ -97,7 +100,8 @@ public class ProductoTest {
                 "Marca X", // Marca
                 "Categoría A", // Categoría
                 10.5f, // Cantidad
-                null // Unidad de medida nula
+                null, // Unidad de medida nula
+                100f // Precio
         );
 
         Set<ConstraintViolation<Producto>> violations = validator.validate(producto);
@@ -109,7 +113,7 @@ public class ProductoTest {
     @Test
     void testGuardar() {
         Producto producto = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO);
+                UnidadMedida.KILOGRAMO, 100f);
 
         when(productoRepositorio.save(any(Producto.class))).thenAnswer(invocation -> {
             Producto p = invocation.getArgument(0);
@@ -127,11 +131,11 @@ public class ProductoTest {
     @Test
     void testActualizarProducto() {
         Producto productoOriginal = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO);
+                UnidadMedida.KILOGRAMO, 100f);
         productoOriginal.setId(1L);
 
         Producto productoActualizado = new Producto("Producto Actualizado", "Descripción Actualizada", "Marca B",
-                "Categoría B", 15.0f, UnidadMedida.LITRO);
+                "Categoría B", 15.0f, UnidadMedida.LITRO, 100f);
 
         when(productoRepositorio.save(any(Producto.class))).thenReturn(productoActualizado);
 
@@ -148,7 +152,7 @@ public class ProductoTest {
     @Test
     void testBorrarProducto() {
         Producto producto = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO);
+                UnidadMedida.KILOGRAMO, 100f);
         producto.setId(1L);
 
         when(productoRepositorio.existsById(producto.getId())).thenReturn(true);

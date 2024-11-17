@@ -2,8 +2,6 @@ package com.itson.controlinventario.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itson.controlinventario.modelos.Inventario;
-import com.itson.controlinventario.modelos.Producto;
 import com.itson.controlinventario.servicios.InventarioServicio;
 
 import jakarta.validation.Valid;
