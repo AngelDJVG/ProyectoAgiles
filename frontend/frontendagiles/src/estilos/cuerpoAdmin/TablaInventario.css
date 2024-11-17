@@ -19,8 +19,9 @@
 }
 
 .tabla img {
-    max-width: 50px;
-    height: auto;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
 }
 
 .tabla button {

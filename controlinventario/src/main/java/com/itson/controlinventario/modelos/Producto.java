@@ -62,8 +62,11 @@ public class Producto {
     @PositiveOrZero(message = "El precio debe ser un número positivo o cero")
     @NotNull(message = "El precio del producto es obligatorio")
     private float precio;
+
+    @NotBlank(message = "La imagen del producto es obligatoria")
+    private String imageUrl;
     
-    public Producto(String nombre, String descripcion, String marca, String categoria, float cantidad, UnidadMedida unidadMedida, float precio) {
+    public Producto(String nombre, String descripcion, String marca, String categoria, float cantidad, UnidadMedida unidadMedida, float precio, String imageUrl) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.marca = marca;
@@ -71,6 +74,7 @@ public class Producto {
         this.cantidad = cantidad;
         this.unidadMedida = unidadMedida;
         this.precio = precio;
+        this.imageUrl = imageUrl;
     }
 
     public float getPrecio(){

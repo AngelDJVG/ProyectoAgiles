@@ -49,6 +49,7 @@ public class ProductoTest {
                 10.5f, // Cantidad
                 UnidadMedida.KILOGRAMO, // Unidad de medida
                 100f // Precio
+                , "imagen.jpg" // Imagen
         );
 
         Set<ConstraintViolation<Producto>> violations = validator.validate(producto);
@@ -66,6 +67,7 @@ public class ProductoTest {
                 10.5f, // Cantidad
                 UnidadMedida.KILOGRAMO, // Unidad de medida
                 100f // Precio
+                , "imagen.jpg" // Imagen
         );
 
         Set<ConstraintViolation<Producto>> violations = validator.validate(producto);
@@ -84,6 +86,7 @@ public class ProductoTest {
                 -10.5f, // Cantidad negativa
                 UnidadMedida.KILOGRAMO, // Unidad de medida
                 100f
+                , "imagen.jpg" // Imagen
         );
 
         Set<ConstraintViolation<Producto>> violations = validator.validate(producto);
@@ -102,6 +105,7 @@ public class ProductoTest {
                 10.5f, // Cantidad
                 null, // Unidad de medida nula
                 100f // Precio
+                , "imagen.jpg" // Imagen
         );
 
         Set<ConstraintViolation<Producto>> violations = validator.validate(producto);
@@ -113,7 +117,7 @@ public class ProductoTest {
     @Test
     void testGuardar() {
         Producto producto = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
 
         when(productoRepositorio.save(any(Producto.class))).thenAnswer(invocation -> {
             Producto p = invocation.getArgument(0);
@@ -131,11 +135,11 @@ public class ProductoTest {
     @Test
     void testActualizarProducto() {
         Producto productoOriginal = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
         productoOriginal.setId(1L);
 
         Producto productoActualizado = new Producto("Producto Actualizado", "Descripción Actualizada", "Marca B",
-                "Categoría B", 15.0f, UnidadMedida.LITRO, 100f);
+                "Categoría B", 15.0f, UnidadMedida.LITRO, 100f, "imagen.jpg");
 
         when(productoRepositorio.save(any(Producto.class))).thenReturn(productoActualizado);
 
@@ -152,7 +156,7 @@ public class ProductoTest {
     @Test
     void testBorrarProducto() {
         Producto producto = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
         producto.setId(1L);
 
         when(productoRepositorio.existsById(producto.getId())).thenReturn(true);

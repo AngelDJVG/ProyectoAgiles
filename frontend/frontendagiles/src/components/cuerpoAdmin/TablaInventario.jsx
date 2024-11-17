@@ -1,43 +1,31 @@
 import '../../estilos/cuerpoAdmin/TablaInventario.css';
-import React from 'react';
+import ProductoService from '../../services/ProductoService';
+import { useState , useEffect} from 'react';
+import BorrarModal from './BorrarModal';
 
 function TablaInventario(){
-    let productosInventario = [{
-        id: 1,
-        imagen: 'imagen1.jpg',
-        nombre: 'Producto 1',
-        descripcion: 'Descripción 1',
-        precio: 200,
-        stock: 20,
-        unidad: 'Pz'
-    },
-    {
-        id: 2,
-        imagen: 'imagen2.jpg',
-        nombre: 'Producto 2',
-        descripcion: 'Descripción 2',
-        precio: 100,
-        stock: 10,
-        unidad: 'Pz'
-    },
-    {
-        id: 3,
-        imagen: 'imagen3.jpg',
-        nombre: 'Producto 3',
-        descripcion: 'Descripción 3',
-        precio: 300,
-        stock: 30,
-        unidad: 'Pz'
-    }
-    ];
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [productosInventario, setProductosInventario] = useState([]);
+    const [productoAEliminar, setProductoAEliminar] = useState(null);
+
+    useEffect(() => {
+        ProductoService.getProductos()
+        .then((data) => setProductosInventario(data));
+    }, []);
 
     function manejarEditar(productoInventario){
         console.log('Editar', productoInventario);
     }
 
-    function manejarEliminar(productoInventario){
-        console.log('Eliminar', productoInventario);
-    }
+    const manejarEliminar = (confirmed) => {
+        setIsModalOpen(false); 
+        if (confirmed && productoAEliminar) {
+          ProductoService.deleteProducto(productoAEliminar).then(() => {
+                setProductosInventario((productosInventario) =>productosInventario.filter((prodInv) => prodInv.id !== productoAEliminar));
+                setProductoAEliminar(null);
+          });
+        }
+      };
 
     return <div className="tabla-wrapper">
         <table className="tabla">
@@ -45,8 +33,8 @@ function TablaInventario(){
             <tr>
                 <th>Imagen</th>
                 <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Stock</th>
+                <th>Marca</th>
+                <th>Categoria</th>
                 <th>Unidad</th>
                 <th>Precio</th>
                 <th>Editar</th>
@@ -56,18 +44,19 @@ function TablaInventario(){
         <tbody>
             {productosInventario.map((prodInv) => (
                 <tr key={prodInv.id}>
-                    <td><img src={prodInv.imagen} alt={prodInv.nombre}/></td>
+                    <td><img src={prodInv.imageUrl} alt={prodInv.nombre}/></td>
                     <td>{prodInv.nombre}</td>
-                    <td>{prodInv.descripcion}</td>
-                    <td>{prodInv.stock}</td>
-                    <td>{prodInv.unidad}</td>
+                    <td>{prodInv.marca}</td>
+                    <td>{prodInv.categoria}</td>
+                    <td>{prodInv.unidadMedida}</td>
                     <td>{prodInv.precio}</td>
-                    <td><button onClick={() => manejarEditar(prodInv)}>Editar</button></td>
-                    <td><button onClick={() => manejarEliminar(prodInv)}>Eliminar</button></td>
+                    <td><button onClick={() => manejarEditar(prodInv.id)}>Editar</button></td>
+                    <td><button onClick={() => {setProductoAEliminar(prodInv.id); setIsModalOpen(true)}}>Eliminar</button></td>
                 </tr>
             ))}
         </tbody>
     </table>
+    <BorrarModal isOpen={isModalOpen} onConfirm={manejarEliminar} />
     </div>;
 }
 
