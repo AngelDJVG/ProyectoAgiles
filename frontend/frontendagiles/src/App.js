@@ -1,34 +1,28 @@
 import './App.css';
-
-//Auth0
+// Auth0
 import { useAuth0 } from '@auth0/auth0-react';
-
-//Componentes
+// Componentes
 import LoginButton from './components/LoginButton';
 import CuerpoAdmin from './components/cuerpoAdmin/CuerpoAdmin';
 import CuerpoInicio from './components/cuerpoUsuario/CuerpoInicio';
-
+// React y Router
 import { useState, useEffect } from 'react';
-
-//Router
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   const { isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
   const [userRole, setUserRole] = useState(null);
+
+  const fetchUserRole = async () => {
+    if (isAuthenticated) {
+      const claims = await getIdTokenClaims();
+      const roles = claims['https://agilesecommerceproyectotokens.com/roles'] || [];
+      setUserRole(roles.includes('admin') ? 'admin' : 'user');
+    }
+  };
+
   useEffect(() => {
-    const fetchRolUsuario = async () => {
-      if (isAuthenticated) {
-        const claims = await getIdTokenClaims();
-        const roles = claims['https://agilesecommerceproyectotokens.com/roles'] || [];
-        if (roles.includes('admin')) {
-          setUserRole('admin');
-        } else {
-          setUserRole('user');
-        }
-      }
-    };
-    fetchRolUsuario();
+    fetchUserRole();
   }, [isAuthenticated, getIdTokenClaims]);
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -37,12 +31,12 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={
-            !isAuthenticated ?
-            <LoginButton /> : 
-            userRole === 'admin' ? 
-            <CuerpoAdmin /> : 
-            <CuerpoInicio />} />
+          <Route
+            path="/"
+            element={ !isAuthenticated ? (<LoginButton />) :
+               userRole === 'admin' ? (<CuerpoAdmin />) : (<CuerpoInicio />)
+            }
+          />
         </Routes>
       </Router>
     </div>

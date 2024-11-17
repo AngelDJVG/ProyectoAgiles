@@ -1,11 +1,7 @@
 .cuerpo-admin {
+    min-height: 100vh;
     background-color: var(--fondo-color);
-    height: 100vh;
+    overflow-x: hidden; 
+    box-sizing: border-box; 
 }
 
-.contenedor-admin {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}

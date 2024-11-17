@@ -39,7 +39,8 @@ function TablaInventario(){
         console.log('Eliminar', productoInventario);
     }
 
-    return <table className="tabla">
+    return <div className="tabla-wrapper">
+        <table className="tabla">
         <thead>
             <tr>
                 <th>Imagen</th>
@@ -48,6 +49,8 @@ function TablaInventario(){
                 <th>Stock</th>
                 <th>Unidad</th>
                 <th>Precio</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
@@ -64,7 +67,8 @@ function TablaInventario(){
                 </tr>
             ))}
         </tbody>
-    </table>;
+    </table>
+    </div>;
 }
 
 export default TablaInventario;
