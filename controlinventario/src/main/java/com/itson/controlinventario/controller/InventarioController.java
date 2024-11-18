@@ -68,7 +68,15 @@ public class InventarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Inventario> actualizarInventario(@RequestBody Inventario inventario) {
-        Inventario inventarioActualizado = inventarioServicio.actualizar(inventario);
+        if(inventario == null || inventario.getId() == null || inventario.getCantidadDisponible() < 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        Inventario inventarioActualizar = inventarioServicio.obtenerPorId(inventario.getId());
+        if(inventarioActualizar == null) {
+            return ResponseEntity.notFound().build();
+        }
+        inventarioActualizar.setCantidadDisponible(inventario.getCantidadDisponible());
+        Inventario inventarioActualizado = inventarioServicio.actualizar(inventarioActualizar);
         return ResponseEntity.ok(inventarioActualizado);
     }
 
