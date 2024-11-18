@@ -1,4 +1,4 @@
-package com.itson.controlinventario.enums;
+package com.itson.controldeventas.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

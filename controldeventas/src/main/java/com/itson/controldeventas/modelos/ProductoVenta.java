@@ -1,4 +1,4 @@
-package com.itson.controlinventario.modelos;
+package com.itson.controldeventas.modelos;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -26,18 +26,17 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
 public class ProductoVenta {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_venta")
     private Venta venta;
-
-    @ManyToOne
-    @JoinColumn(name = "id_producto")
-    private Producto producto;
-
+ 
+    @PositiveOrZero(message = "El id debe ser un número positivo o cero")
+    @NotNull(message = "El id de producto es obligatorio")
+    private Long id_producto;
     @PositiveOrZero(message = "La cantidad debe ser un número positivo o cero")
     @NotNull(message = "La cantidad es obligatoria")
     private Integer cantidad;
@@ -53,7 +52,8 @@ private Long id;
     @PrePersist
     @PreUpdate
     public void calcularSubtotal() {
-        if (producto != null && cantidad != null) {; 
+        if (id_producto != null && cantidad != null) {
+            ;
             this.subtotal = this.cantidad * this.precioVenta;
         }
     }
