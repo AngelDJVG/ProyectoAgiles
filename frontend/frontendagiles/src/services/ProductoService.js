@@ -1,53 +1,85 @@
+export default class ProductoService {
+  static DEFAULT_IMAGE_URL =
+    "https://img.freepik.com/vector-premium/ilustracion-dibujos-animados-vectoriales-caja-plana-2d-colorida_1120558-24362.jpg";
+  
+    static getProductosInventario() {
+    return fetch('http://localhost:4000/api/inventario/')
+      .then(response => response.json())
+      .then(data => data)
+      .catch(error => console.log("Error al obtener los producto inventario"));
+  }
 
-export default class ProductoService{
-    static getProductos(){
-        return fetch('http://localhost:4000/api/productos')
-        .then(response => response.json())
-        .then(data => data)
-        .catch(error => console.log("Error al obtener los productos"));
-    }
-
-    static crearProducto(producto){
-      ProductoService.getImagePexels(producto.nombre).then((imageUrl) => {
-        producto.imageUrl = imageUrl;}).catch((error) => 
-        producto.imageUrl= "https://img.freepik.com/vector-premium/ilustracion-dibujos-animados-vectoriales-caja-plana-2d-colorida_1120558-24362.jpg");
-        return fetch('http://localhost:4000/api/productos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(producto)
-        })
-        .then(response => response.json())
-        .catch(error => console.log("Error al crear el producto"));
-    }
-
-
-    static deleteProducto(id){
-        return fetch(`http://localhost:4000/api/productos/${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => response)
-        .catch(error => console.log("Error al eliminar el producto"));
-    }
-
-    static getImagePexels = async (nombreProducto) => {
-        const apiKey = process.env.IMAGES_API;
-        const url = `${process.env.IMAGES_API_URL}${encodeURIComponent(nombreProducto)}&per_page=1`;
-        try {
-          const response = await fetch(url, {
-            headers: {
-              Authorization: apiKey
-            }
-          });
-          if (!response.ok) {
-            return "https://img.freepik.com/vector-premium/ilustracion-dibujos-animados-vectoriales-caja-plana-2d-colorida_1120558-24362.jpg";
-          }
-          const data = await response.json();
-          const imageUrl = data.photos[0]?.src?.medium; 
-          return imageUrl;
-        } catch (error) {
-          return "https://img.freepik.com/vector-premium/ilustracion-dibujos-animados-vectoriales-caja-plana-2d-colorida_1120558-24362.jpg";
+  static crearProductoInventario(producto, stock) {
+    return ProductoService.getImagePexels(producto.nombre)
+      .then(imageUrl => {
+        producto.imageUrl = imageUrl || ProductoService.DEFAULT_IMAGE_URL;
+        return fetch("http://localhost:4000/api/productos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(producto),
+        });
+      })
+      .then(response => {
+        if (!response.ok) {
+          return Promise.reject(new Error("Error al crear el producto"));
+        } else {
+          return response.json();
         }
-      };
+      })
+      .then(data => {
+        const inventario = { producto: data, cantidadDisponible: stock };
+        return fetch("http://localhost:4000/api/inventario", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(inventario),
+        }).then(response => {
+          if (!response.ok) {
+            return Promise.reject(new Error("Error al crear el inventario"));
+          }
+          return response.json();  
+        });
+      })
+      .catch(error => {
+        console.error("Error al crear producto:", error.message);
+        throw error;
+      });
+  }
+
+  static actualizarInventario(idInventario, stock){
+    return fetch(`http://localhost:4000/api/inventario/${idInventario}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({id:idInventario, cantidadDisponible: stock })
+    })
+      .then(response => response.status === 200 ? response.json() : null)
+      .catch(error => console.log("Error al actualizar el producto inventario"));
+  }
+
+  static deleteInventario(id) {
+    return fetch(`http://localhost:4000/api/inventario/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => response)
+      .catch(error => console.log("Error al eliminar el producto inventario"));
+  }
+
+  static getImagePexels(nombreProducto) {
+    const apiKey = "qPJnkC9xvyBpdhgYIAQrJenU3CsqBFebC9yf9kLebTtHnJAhoHHjBDtB";
+    const url = `https://api.pexels.com/v1/search?query=${nombreProducto}&per_page=1`;
+    return fetch(url, {
+      headers: { Authorization: apiKey },
+    }).then(response => {
+      if (!response.ok) {
+        return null;
+      }
+      return response.json();
+    })
+      .then(data => {
+        return data.photos[0]?.src?.medium || null;
+      })
+      .catch(error => {
+        return null;
+      });
+  }
+  
 }
