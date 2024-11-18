@@ -42,7 +42,7 @@ function TablaInventario(){
             </tr>
         </thead>
         <tbody>
-            {productosInventario.map((prodInv) => (
+            {!productosInventario || productosInventario.length === 0 ?<tr><td colSpan="8">No hay productos en el inventario</td></tr> :productosInventario.map((prodInv) => (
                 <tr key={prodInv.id}>
                     <td><img src={prodInv.imageUrl} alt={prodInv.nombre}/></td>
                     <td>{prodInv.nombre}</td>
