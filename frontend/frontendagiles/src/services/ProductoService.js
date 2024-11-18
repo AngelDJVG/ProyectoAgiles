@@ -7,21 +7,27 @@ export default class ProductoService{
         .catch(error => console.log("Error al obtener los productos"));
     }
 
-    static crearProducto(producto){
+    static crearProducto(producto) {
       ProductoService.getImagePexels(producto.nombre).then((imageUrl) => {
-        producto.imageUrl = imageUrl;}).catch((error) => 
-        producto.imageUrl= "https://img.freepik.com/vector-premium/ilustracion-dibujos-animados-vectoriales-caja-plana-2d-colorida_1120558-24362.jpg");
+        producto.imageUrl = imageUrl;
         return fetch('http://localhost:4000/api/productos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(producto)
-        })
-        .then(response => response.json())
-        .catch(error => console.log("Error al crear el producto"));
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(producto)
+        });
+      }).catch((error) =>{
+        producto.imageUrl = "https://img.freepik.com/vector-premium/ilustracion-dibujos-animados-vectoriales-caja-plana-2d-colorida_1120558-24362.jpg"
+        return fetch('http://localhost:4000/api/productos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(producto)
+        });
+      });
     }
-
 
     static deleteProducto(id){
         return fetch(`http://localhost:4000/api/productos/${id}`, {
