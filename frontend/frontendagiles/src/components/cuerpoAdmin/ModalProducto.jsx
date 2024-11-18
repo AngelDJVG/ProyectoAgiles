@@ -40,12 +40,16 @@ const ModalProducto = ({ isOpen, onClose }) => {
             <input type="text" placeholder="Categoria" />
           </div>
           <div className="form-group">
+            <label>Stock</label>
+            <input type="number" min="0" step="any" placeholder="Stock" />
+          </div>
+          <div className="form-group">
             <label>Cantidad</label>
-            <input type="number" placeholder="Cantidad" />
+            <input type="number" min="0" step="any" placeholder="Cantidad" />
           </div>
           <div className="form-group">
             <label>Precio</label>
-            <input type="number" placeholder="Precio" />
+            <input type="number" min="0" step="any" placeholder="Precio" />
           </div>
           <div className="form-group">
             <label>Unidad de Medida</label>
