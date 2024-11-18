@@ -1,26 +1,24 @@
-package com.itson.controlinventario.controller;
+package com.itson.controldeventas.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itson.controlinventario.modelos.ProductoVenta;
-import com.itson.controlinventario.modelos.Venta;
-import com.itson.controlinventario.servicios.VentaServicio;
+import com.itson.controldeventas.modelos.ProductoVenta;
+import com.itson.controldeventas.modelos.Venta;
+import com.itson.controldeventas.servicios.VentaServicio;
 
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4000", originPatterns = "*")
+@CrossOrigin(origins = "http://localhost:4001", originPatterns = "*")
 @RequestMapping({ "/api/venta" })
 public class VentaController {
 @Autowired    

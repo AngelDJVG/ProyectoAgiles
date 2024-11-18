@@ -1,12 +1,12 @@
-package com.itson.controlinventario.servicios;
+package com.itson.controldeventas.servicios;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.itson.controlinventario.modelos.Venta;
-import com.itson.controlinventario.repository.VentaRepositorio;
+import com.itson.controldeventas.modelos.Venta;
+import com.itson.controldeventas.repository.VentaRepositorio;
 
 @Service
 public class VentaServicio {
@@ -16,10 +16,6 @@ public class VentaServicio {
     
     public Venta guardarVenta(Venta venta) {
         return ventaRepositorio.save(venta);
-    }
-
-    public void eliminarVenta(Long id) {
-        ventaRepositorio.deleteById(id);
     }
 
     public void actualizarVenta(Venta venta) {

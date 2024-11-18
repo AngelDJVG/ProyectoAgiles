@@ -1,4 +1,4 @@
-package com.itson.controlinventario.modelos;
+package com.itson.controldeventas.modelos;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -6,9 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.itson.controlinventario.enums.EstadoVenta;
+import com.itson.controldeventas.enums.EstadoVenta;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

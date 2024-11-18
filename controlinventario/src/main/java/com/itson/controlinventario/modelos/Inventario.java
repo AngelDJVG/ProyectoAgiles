@@ -4,8 +4,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Date;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
