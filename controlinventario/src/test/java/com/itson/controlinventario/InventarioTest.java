@@ -43,7 +43,7 @@ public class InventarioTest {
     @Test
     void testInventarioValido() {
         Producto producto = new Producto("Producto 1", "Descripción del producto", "Marca X", "Categoría A", 10.5f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
         Inventario inventario = new Inventario(producto, 50, new Date());
 
         Set<ConstraintViolation<Inventario>> violations = validator.validate(inventario);
@@ -54,7 +54,7 @@ public class InventarioTest {
     @Test
     void testInventarioCantidadNegativa() {
         Producto producto = new Producto("Producto 1", "Descripción del producto", "Marca X", "Categoría A", 10.5f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
         Inventario inventario = new Inventario(producto, -5, new Date());
 
         Set<ConstraintViolation<Inventario>> violations = validator.validate(inventario);
@@ -67,7 +67,7 @@ public class InventarioTest {
     @Test
     void testInventarioFechaNula() {
         Producto producto = new Producto("Producto 1", "Descripción del producto", "Marca X", "Categoría A", 10.5f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
         Inventario inventario = new Inventario(producto, 50, null);
 
         Set<ConstraintViolation<Inventario>> violations = validator.validate(inventario);
@@ -79,7 +79,7 @@ public class InventarioTest {
     @Test
     void testGuardar() {
         Producto producto = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
         Inventario inventario = new Inventario(producto, 30, new Date());
 
         when(inventarioRepositorio.save(any(Inventario.class))).thenAnswer(invocation -> {
@@ -98,7 +98,7 @@ public class InventarioTest {
     @Test
     void testActualizarInventario() {
         Producto producto = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
         Inventario inventarioOriginal = new Inventario(producto, 30, new Date());
 
         inventarioOriginal.setId(1L);
@@ -118,7 +118,7 @@ public class InventarioTest {
     @Test
     void testBorrarInventario() {
         Producto producto = new Producto("Producto 1", "Descripción", "Marca A", "Categoría A", 10.0f,
-                UnidadMedida.KILOGRAMO, 100f);
+                UnidadMedida.KILOGRAMO, 100f, "imagen.jpg");
         Inventario inventario = new Inventario(producto, 30, new Date());
 
         inventario.setId(1L);

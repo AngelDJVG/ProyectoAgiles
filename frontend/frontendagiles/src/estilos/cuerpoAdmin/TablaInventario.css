@@ -1,0 +1,43 @@
+
+.tabla, .tabla th, .tabla td, .tabla button {
+    border-radius: 10px;
+}
+
+.tabla {
+    margin: 0 auto;
+    background-color: var(--fondo-color);
+    color: var(--blanco-color);
+    font-size: 20px;
+}
+
+.tabla th, .tabla td {
+    padding: 10px;
+}
+
+.tabla th {
+    background-color: var(--columnas-color);
+}
+
+.tabla img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.tabla button {
+    background-color: var(--header-color);
+    color: var(--blanco-color);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 15%;
+}
+
+.tabla button:hover {
+    background-color: var(--columnas-color);
+}
+
+.tabla-wrapper {
+    overflow-x: auto; 
+    width: 100%; 
+}
