@@ -2,6 +2,7 @@ package com.itson.controlinventario.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class InventarioController {
 
     @PostMapping
     public ResponseEntity<Inventario> crearInventario(@Valid @RequestBody Inventario inventario) {
+        inventario.setFechaActualizacion(new Date());
         Inventario nuevoInventario = inventarioServicio.crear(inventario);
         return ResponseEntity.ok(nuevoInventario);
     }

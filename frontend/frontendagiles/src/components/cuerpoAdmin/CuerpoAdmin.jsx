@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
 import LogoutButton from '../LogoutButton';
 import HeaderAdmin from './HeaderAdmin';
 import TablaInventario from './TablaInventario';
 import BotonAgregar from './BotonAgregar';
-import ModalProducto from './ModalProducto';  // Asegúrate de importar ModalProducto
+import ModalProducto from './ModalProducto';  
 import '../../estilos/cuerpoAdmin/CuerpoAdmin.css';
 
 function CuerpoAdmin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const tablaInventarioRef = useRef(null);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -17,15 +18,21 @@ function CuerpoAdmin() {
     setIsModalOpen(false);
   };
 
+  const handleProductoAgregado = () => { 
+    if (tablaInventarioRef.current) { 
+      tablaInventarioRef.current.actualizarVista(); 
+    } 
+  };
+
   return (
     <div className='cuerpo-admin'>
       <HeaderAdmin />
-      <TablaInventario />
+      <TablaInventario ref={tablaInventarioRef}/>
       <br />
       <BotonAgregar onClick={handleOpenModal} />
       
       {/* ModalProducto */}
-      <ModalProducto isOpen={isModalOpen} onClose={handleCloseModal} />
+      <ModalProducto isOpen={isModalOpen} onClose={handleCloseModal} onProductoAgregado={handleProductoAgregado}/>
     </div>
   );
 }

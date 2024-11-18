@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "../../estilos/cuerpoAdmin/modalProducto.css";
-import ProductoService from "../../services/ProductoService.js";
+import ProductoService from "../../services/ProductoService";
 
-const ModalProducto = ({ isOpen, onClose }) => {
-  // Estados para cada campo del formulario
+const ModalProducto = ({ isOpen, onClose, onProductoAgregado}) => {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [marca, setMarca] = useState('');
@@ -11,7 +10,7 @@ const ModalProducto = ({ isOpen, onClose }) => {
   const [stock, setStock] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [precio, setPrecio] = useState('');
-  const [unidadMedida, setUnidadMedida] = useState('pz'); // Estado para la unidad de medida
+  const [unidadMedida, setUnidadMedida] = useState('pz'); 
 
   const unidades = [
     { value: 'pz', label: 'Pieza' },
@@ -21,7 +20,6 @@ const ModalProducto = ({ isOpen, onClose }) => {
     { value: 'und', label: 'Unidad' }
   ];
 
-  // Funciones para manejar los cambios en los inputs
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);
   };
@@ -31,7 +29,6 @@ const ModalProducto = ({ isOpen, onClose }) => {
   };
 
   const handleAgregarClick = () => {
-    // Empaquetar los datos en un objeto producto
     const producto = {
       nombre,
       descripcion,
@@ -41,16 +38,20 @@ const ModalProducto = ({ isOpen, onClose }) => {
       precio,
       unidadMedida
     };
-    
-    ProductoService.crearProducto(producto).then((res)=>{
-      alert('Se agrego el producto!')
-    });
-
-    // Aquí puedes hacer lo que necesites con el objeto producto, como enviarlo a un servidor o actualizar el estado
-    console.log(producto); // Solo para prueba, puedes reemplazarlo por un llamado a una función de callback o API
-
-    // Cerrar el modal
-    onClose();
+  
+    ProductoService.crearProductoInventario(producto, stock)
+      .then((res) => {
+        alert("¡Producto agregado con éxito!");
+        if (onProductoAgregado) { 
+          onProductoAgregado(); 
+        }
+      })
+      .catch((error) => {
+        console.error("Error al agregar el producto", error); 
+      })
+      .finally(() => {
+        onClose();
+      });
   };
 
   if (!isOpen) return null;

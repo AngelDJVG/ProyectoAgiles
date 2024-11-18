@@ -32,7 +32,6 @@ public class Inventario {
     @PositiveOrZero(message = "La cantidad disponible debe ser un número positivo o cero")
     private int cantidadDisponible;
 
-    @NotNull(message = "La fecha de actualización es obligatoria")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizacion;
 
