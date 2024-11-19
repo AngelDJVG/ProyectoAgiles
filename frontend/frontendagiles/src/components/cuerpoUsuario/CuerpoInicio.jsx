@@ -1,12 +1,15 @@
 import React from 'react';
-import LogoutButton from '../LogoutButton';
+import '../../estilos/cuerpoUsuario/CuerpoUsuario.css';
+import HeaderUsuario from './HeaderUsuario';
+import Productos from './Productos';
+import ProductoService from '../../services/ProductoService';
 
 function CuerpoInicio() {
+  ProductoService.getProductosInventario();
   return (
-    <div>
-      <h1>Inicio</h1>
-      <p>Aquí se mostrarán los productos</p>
-      <LogoutButton/>
+    <div className='cuerpo-usuario'>
+      <HeaderUsuario/>
+      <Productos/>
     </div>
   );
 }
