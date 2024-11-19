@@ -1,0 +1,7 @@
+.cuerpo-usuario {
+    min-height: 100vh;
+    background-color: var(--fondo-color);
+    overflow-x: hidden; 
+    box-sizing: border-box; 
+}
+

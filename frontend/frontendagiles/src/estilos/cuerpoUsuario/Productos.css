@@ -1,0 +1,38 @@
+.card-container {
+    display: flex; /* Activa flexbox */
+    flex-wrap: wrap; /* Permite que las tarjetas salten a la siguiente fila */
+    gap: 10px; /* Espacio entre tarjetas */
+    padding: 1rem;
+    justify-content: center; /* Centra las tarjetas */
+}
+
+.card {
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center; /* Centra los elementos horizontalmente */
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; /* Ajusta la imagen sin distorsión */
+    border-radius: 8px;
+}
+
+.no-products {
+    text-align: center;
+    color: #888;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
