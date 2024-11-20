@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS controldeventas;
+CREATE DATABASE IF NOT EXISTS controldeinventario;

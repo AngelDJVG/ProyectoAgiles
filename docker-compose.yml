@@ -1,0 +1,60 @@
+version: '3.9'
+
+services:
+
+  mysql-database:
+    image: mysql:8.0.40
+    environment:
+      MYSQL_ROOT_PASSWORD: hola
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 30s
+      retries: 10
+
+  controldeventas:
+    container_name: controldeventas
+    build: 
+      context: ./controldeventas
+      dockerfile: Dockerfile.controldeventas
+    environment:
+      MYSQL_URL: jdbc:mysql://mysql-database:3306/controldeventas?useSSL=true&requireSSL=true&verifyServerCertificate=false
+      MYSQL_USER: root
+      MYSQL_PASSWORD: hola
+    ports:
+      - "4001:4001"
+    depends_on:
+      - mysql-database
+
+  controldeinventario:
+    build: 
+      context: ./controlinventario
+      dockerfile: Dockerfile.controldeinventario
+    container_name: controldeinventario
+    environment:
+      MYSQL_URL: jdbc:mysql://mysql-database:3306/controldeinventario?useSSL=true&requireSSL=true&verifyServerCertificate=false
+      MYSQL_USER: root
+      MYSQL_PASSWORD: hola
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mysql-database
+    
+  frontend:
+    build:
+      context: ./frontend/frontendagiles
+      dockerfile: Dockerfile.frontagiles
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - controldeventas
+      - controldeinventario
+    env_file:
+      - /frontend/frontendagiles/.env
+volumes:
+  mysql-data:

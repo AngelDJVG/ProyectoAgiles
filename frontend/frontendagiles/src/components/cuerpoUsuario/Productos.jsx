@@ -8,7 +8,7 @@ const Productos = forwardRef((props, ref) => {
     const actualizarVista = () => {
         ProductoService.getProductosInventario()
             .then((data) => setProductosInventario(data))
-            .catch((error) => console.error("Error al obtener productos:", error));
+            .catch((error) => console.error("Error al obtener productos, ayuda causas:", error));
     };
 
     useEffect(() => {

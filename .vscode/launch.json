@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ControlinventarioApplication",
+            "request": "launch",
+            "mainClass": "com.itson.controlinventario.ControlinventarioApplication",
+            "projectName": "controlinventario"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-ControldeventasApplication<controldeventas>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
