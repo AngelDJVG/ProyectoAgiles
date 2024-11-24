@@ -1,5 +1,5 @@
 import React from "react";
-import "../../estilos/cuerpoAdmin/BorrarModal.css";
+import "../../estilos/cuerpoProductoInventario/BorrarModal.css";
 
 const BorrarModal = ({ isOpen, onConfirm }) => {
   if (!isOpen) return null; 

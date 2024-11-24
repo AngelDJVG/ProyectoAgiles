@@ -1,4 +1,4 @@
-import '../../estilos/cuerpoAdmin/TablaInventario.css';
+import '../../estilos/cuerpoProductoInventario/TablaInventario.css';
 import ProductoService from '../../services/ProductoService';
 import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import BorrarModal from './BorrarModal';

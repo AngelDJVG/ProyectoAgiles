@@ -8,7 +8,7 @@ const Productos = forwardRef((props, ref) => {
     const actualizarVista = () => {
         ProductoService.getProductosInventario()
             .then((data) => setProductosInventario(data))
-            .catch((error) => console.error("Error al obtener productos, ayuda causas:", error));
+            .catch((error) => console.error("Error al obtener productos:", error));
     };
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const Productos = forwardRef((props, ref) => {
     return (
         <section>
             <section className="card-container">
-                {productosInventario.length === 0 ? (
+                {!productosInventario || productosInventario.length === 0 ? (
                     <div className="no-products">
                         No hay productos en el inventario
                     </div>
