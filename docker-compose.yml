@@ -44,6 +44,23 @@ services:
     depends_on:
       - mysql-database
     
+  controldepromociones:
+    build: 
+      context: ./controldepromociones
+      dockerfile: Dockerfile.controldepromociones
+    container_name: controldepromociones
+    environment:
+      MYSQL_URL: jdbc:mysql://mysql-database:3306/controldepromociones?useSSL=true&requireSSL=true&verifyServerCertificate=false
+      MYSQL_USER: root
+      MYSQL_PASSWORD: hola
+    ports:
+      - "4002:4002"
+    depends_on:
+      - mysql-database
+      - controldeventas
+      - controldeinventario
+
+
   frontend:
     build:
       context: ./frontend/frontendagiles

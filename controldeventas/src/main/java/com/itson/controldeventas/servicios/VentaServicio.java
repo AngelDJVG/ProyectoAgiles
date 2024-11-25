@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.itson.controldeventas.modelos.Venta;
 import com.itson.controldeventas.repository.VentaRepositorio;
+import com.itson.controldeventas.enums.EstadoVenta;
 
 @Service
 public class VentaServicio {
@@ -32,6 +33,22 @@ public class VentaServicio {
     
     public List<Venta> obtenerTodasLasVentas() {
         return ventaRepositorio.findAll();
+    }
+
+    public Venta cancelarVenta(Long id) {
+        Venta venta = obtenerVentaPorId(id);
+        
+        if (venta == null) {
+            return null;
+        }
+
+        if(venta.getEstado() == EstadoVenta.CANCELADA || venta.getEstado() == EstadoVenta.COMPLETADA){
+            return null;
+        }
+
+        venta.setEstado(EstadoVenta.CANCELADA);
+        ventaRepositorio.save(venta);
+        return venta;
     }
     
     
