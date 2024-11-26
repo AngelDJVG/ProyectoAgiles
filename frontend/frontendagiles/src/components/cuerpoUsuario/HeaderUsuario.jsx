@@ -2,7 +2,7 @@ import '../../estilos/cuerpoUsuario/HeaderUsuario.css';
 import React from 'react';
 import LogoutButton from '../LogoutButton';
 
-function HeaderUsuario({ onSearchChange }) {
+function HeaderUsuario({ onSearchChange, setCarrito }) {
 	const handleInputChange = (e) => {
 		const value = e.target.value;
 		if (onSearchChange) {
@@ -14,7 +14,7 @@ function HeaderUsuario({ onSearchChange }) {
 		<>
 			<header className="header">
 				<nav className="navbar">
-					<img src="/assets/Logo.png" alt="carrito" className="titulo" />
+					<img src="/assets/Logo.png" alt="carrito" className="titulo" onClick={()=>{setCarrito(false)}} />
 					<div className="search-bar">
 						<input
 							type="text"
@@ -22,7 +22,7 @@ function HeaderUsuario({ onSearchChange }) {
 							onChange={handleInputChange} // Escuchar cambios en el input
 						/>
 					</div>
-					<img src="/assets/Carrito.png" alt="carrito" className="shooping-icon" />
+					<img src="/assets/Carrito.png" alt="carrito" className="shooping-icon" onClick={()=>{setCarrito(true)}}/>
 					<LogoutButton />
 				</nav>
 			</header>

@@ -22,6 +22,19 @@ const Productos = forwardRef((props, ref) => {
             .catch((error) => console.error("Error al filtrar productos:", error));
     };
 
+    const añadirAlCarrito = (producto) => {
+        // Obtener el carrito actual del localStorage o inicializar uno vacío
+        const carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
+        
+        // Añadir el producto al carrito
+        carritoActual.push(producto);
+        
+        // Guardar el carrito actualizado en el localStorage
+        localStorage.setItem("carrito", JSON.stringify(carritoActual));
+        
+        alert(`${producto.nombre} añadido al carrito`);
+    };
+
     useEffect(() => {
         actualizarVista();
     }, []);
@@ -42,11 +55,12 @@ const Productos = forwardRef((props, ref) => {
                     productosInventario.map((producto) => (
                         <div className="card" key={producto.id}>
                             <img
-                                src={producto.imageUrl} // Accediendo a propiedades planas
+                                src={producto.imageUrl} 
                                 alt={producto.nombre}
                             />
                             <span>{producto.nombre}</span>
                             <span>$ {producto.precio}</span>
+                            <button onClick={() => añadirAlCarrito(producto)}>Añadir al carrito</button>
                         </div>
                     ))
                 )}

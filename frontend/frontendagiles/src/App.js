@@ -10,6 +10,7 @@ import Home from './components/Home';
 // React y Router
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Carrito from './components/cuerpoUsuario/Carrito';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/" element={ !isAuthenticated ? (<Home />) : userRole === 'admin' ? (<CuerpoAdmin />) : (<CuerpoInicio />)}/>
           <Route path="/productosinventario" element={<CuerpoProductos />} />
           <Route path="/promociones" element={<CuerpoPromociones />} />
+          
         </Routes>
       </Router>
     </div>
