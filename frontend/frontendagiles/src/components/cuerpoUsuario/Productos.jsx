@@ -6,17 +6,31 @@ const Productos = forwardRef((props, ref) => {
     const [productosInventario, setProductosInventario] = useState([]);
 
     const actualizarVista = () => {
-        ProductoService.getProductosInventario()
+        ProductoService.getProductos()
             .then((data) => setProductosInventario(data))
             .catch((error) => console.error("Error al obtener productos:", error));
+    };
+
+    const filtrarPorNombre = (nombre) => {
+        if (nombre.trim() === "") {
+            actualizarVista(); // Si el filtro está vacío, recargar la vista original
+            return;
+        }
+
+        ProductoService.buscarPorNombre(nombre)
+            .then((data) => setProductosInventario(data))
+            .catch((error) => console.error("Error al filtrar productos:", error));
     };
 
     useEffect(() => {
         actualizarVista();
     }, []);
 
-    useImperativeHandle(ref, () => ({ actualizarVista }));
-
+    useImperativeHandle(ref, () => ({
+        actualizarVista,
+        filtrarPorNombre, // Exponer este método para ser usado desde el componente padre
+    }));
+    
     return (
         <section>
             <section className="card-container">
@@ -25,14 +39,14 @@ const Productos = forwardRef((props, ref) => {
                         No hay productos en el inventario
                     </div>
                 ) : (
-                    productosInventario.map((prodInv) => (
-                        <div className="card" key={prodInv.producto.id}>
+                    productosInventario.map((producto) => (
+                        <div className="card" key={producto.id}>
                             <img
-                                src={prodInv.producto.imageUrl}
-                                alt={prodInv.producto.nombre}
+                                src={producto.imageUrl} // Accediendo a propiedades planas
+                                alt={producto.nombre}
                             />
-                            <span>{prodInv.producto.nombre}</span>
-                            <span>$ {prodInv.producto.precio}.00</span>
+                            <span>{producto.nombre}</span>
+                            <span>$ {producto.precio}</span>
                         </div>
                     ))
                 )}
