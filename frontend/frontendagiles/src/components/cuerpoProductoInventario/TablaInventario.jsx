@@ -1,15 +1,22 @@
-import '../../estilos/cuerpoAdmin/TablaInventario.css';
+import '../../estilos/cuerpoProductoInventario/TablaInventario.css';
 import ProductoService from '../../services/ProductoService';
 import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BorrarModal from './BorrarModal';
 import ActualizarModal from './ActualizarModal';
+import ModalPromociones from '../cuerpoPromociones/ModalPromocion';
 
 const TablaInventario = forwardRef((props, ref) => {
+    const navigate = useNavigate();
+
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal para borrar
     const [productoAEliminar, setProductoAEliminar] = useState(null);
 
     const [isActualizarOpen, setIsActualizarOpen] = useState(false); // Modal para actualizar
     const [productoAActualizar, setProductoActualizar] = useState(null);
+
+    const [isPromocionarOpen, setIsPromocionarOpen] = useState(false); // Modal para promocionar
+    const [productoPromocionar, setProductoPromocionar] = useState(null);
 
     const [productosInventario, setProductosInventario] = useState([]);
     
@@ -39,6 +46,14 @@ const TablaInventario = forwardRef((props, ref) => {
             });
         }
     };
+    
+    const manejarPromocionar = (confirmed) =>{
+        setIsPromocionarOpen(false);
+        if (confirmed) {
+            navigate('/promociones');
+            setProductoPromocionar(null);
+        }
+    }
 
     return <div className="tabla-wrapper">
         <table className="tabla">
@@ -53,6 +68,7 @@ const TablaInventario = forwardRef((props, ref) => {
                     <th>Precio</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
+                    <th>Promoción</th>
                 </tr>
             </thead>
             <tbody>
@@ -67,18 +83,20 @@ const TablaInventario = forwardRef((props, ref) => {
                         <td>{prodInv.producto.precio}</td>
                         <td><button onClick={() => {setProductoActualizar(prodInv); setIsActualizarOpen(true);}}>Editar</button></td>
                         <td><button onClick={() => {setProductoAEliminar(prodInv.id); setIsModalOpen(true) }}>Eliminar</button></td>
+                        <td><button onClick={() => {setProductoPromocionar(prodInv.producto); setIsPromocionarOpen(true) }}>Promocionar</button></td>
                     </tr>
                 ))}
             </tbody>
         </table>
         <BorrarModal isOpen={isModalOpen} onConfirm={manejarEliminar} />
-        {isActualizarOpen && (
+        
         <ActualizarModal
           isOpenActualizar={isActualizarOpen}
           prodInv={productoAActualizar}
           onConfirm={manejarEditar}
         />
-      )}
+
+        <ModalPromociones isOpen={isPromocionarOpen} onConfirm={manejarPromocionar} producto={productoPromocionar}/>
     </div>;
 });
 

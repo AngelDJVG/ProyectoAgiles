@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itson.controldepromociones.modelos.Promocion;
+import com.itson.controldepromociones.publishers.PromocionesPublisher;
 import com.itson.controldepromociones.servicios.PromocionServicio;
 
 import jakarta.validation.Valid;
@@ -25,10 +26,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PromocionController {
 @Autowired
 private PromocionServicio promocionServicio;
+@Autowired
+private PromocionesPublisher promocionesPublisher;
 
 @PostMapping(value = "/", consumes = {"application/xml","application/json"})
 public ResponseEntity<Promocion> crearPromocion(@Valid @RequestBody Promocion promocion) {
     Promocion nuevaPromocion = promocionServicio.guardarPromocion(promocion);
+    promocionesPublisher.publicarPromocion(nuevaPromocion);
     return ResponseEntity.ok(nuevaPromocion);
 }
 

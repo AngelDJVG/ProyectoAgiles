@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../estilos/cuerpoAdmin/modalProducto.css";
+import "../../estilos/cuerpoProductoInventario/modalProducto.css";
 import ProductoService from "../../services/ProductoService";
 
 const ModalProducto = ({ isOpen, onClose, onProductoAgregado}) => {

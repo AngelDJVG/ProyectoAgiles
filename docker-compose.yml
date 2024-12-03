@@ -1,4 +1,4 @@
-version: '3.9'
+
 
 services:
 
@@ -61,17 +61,17 @@ services:
       - controldeinventario
 
 
-  frontend:
-    build:
-      context: ./frontend/frontendagiles
-      dockerfile: Dockerfile.frontagiles
-    container_name: frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - controldeventas
-      - controldeinventario
-    env_file:
-      - /frontend/frontendagiles/.env
+  #frontend:
+   # build:
+    #  context: ./frontend/frontendagiles
+     # dockerfile: Dockerfile.frontagiles
+    #container_name: frontend
+    #ports:
+    #  - "3000:3000"
+    #depends_on:
+   #   - controldeventas
+   #   - controldeinventario
+    #env_file:
+    #  - /frontend/frontendagiles/.env
 volumes:
   mysql-data:
